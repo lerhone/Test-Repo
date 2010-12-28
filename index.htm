@@ -1,0 +1,871 @@
+<?php
+ 
+$mobile_browser = '0';
+ 
+if(preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+    $mobile_browser++;
+}
+ 
+if((strpos(strtolower($_SERVER['HTTP_ACCEPT']),'application/vnd.wap.xhtml+xml')>0) or ((isset($_SERVER['HTTP_X_WAP_PROFILE']) or isset($_SERVER['HTTP_PROFILE'])))) {
+    $mobile_browser++;
+}    
+ 
+$mobile_ua = strtolower(substr($_SERVER['HTTP_USER_AGENT'],0,4));
+$mobile_agents = array(
+    'w3c ','acs-','alav','alca','amoi','audi','avan','benq','bird','blac',
+    'blaz','brew','cell','cldc','cmd-','dang','doco','eric','hipt','inno',
+    'ipaq','java','jigs','kddi','keji','leno','lg-c','lg-d','lg-g','lge-',
+    'maui','maxo','midp','mits','mmef','mobi','mot-','moto','mwbp','nec-',
+    'newt','noki','oper','palm','pana','pant','phil','play','port','prox',
+    'qwap','sage','sams','sany','sch-','sec-','send','seri','sgh-','shar',
+    'sie-','siem','smal','smar','sony','sph-','symb','t-mo','teli','tim-',
+    'tosh','tsm-','upg1','upsi','vk-v','voda','wap-','wapa','wapi','wapp',
+    'wapr','webc','winw','winw','xda','xda-');
+
+ 
+if(in_array($mobile_ua,$mobile_agents)) {
+    $mobile_browser++;
+}
+ 
+if (strpos(strtolower($_SERVER['ALL_HTTP']),'OperaMini')>0) {
+    $mobile_browser++;
+}
+ 
+if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']),'windows')>0) {
+    $mobile_browser=0;
+}
+if(preg_match('/(android|iphone)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+    $mobile_browser=0;
+}
+ 
+if($mobile_browser>0) {
+   header('Location: mobile/index.htm');
+} 
+ 
+?>
+<!DOCTYPE html>
+<html lang="en" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/">
+<head>
+<title>Archer Cares - The Archer Group</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta property="og:title" content="I Helped Turn Likes Into Learning with Archer Cares" />
+<meta property="og:description" content="The Archer Group is turning Likes into Learning by working with DonorsChoose.org to help teachers across the country implement classroom projects.   Archer will donate money for each 'Like' a project receives so spread the word and visit www.archer-group.com/cares" />
+<meta property="og:image" content="http://www.archer-group.com/cares/images/facebook_logo.jpg?v=2" />
+<link rel="image_src" href="http://www.archer-group.com/cares/images/facebook_logo.jpg?v=2" />
+
+<link rel="shortcut icon" href="favicon.ico"/>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-3468958-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript" src="js/addthis_widget.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+
+<link href="css/colorbox2.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/jquery.colorbox.js"></script> 
+
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/Archer.font.js"></script>
+
+<script type="text/javascript">
+	// NOTE: This needs to be updated every time a project is 'funded'.
+	var projectsCompleted = 8;
+	
+	var totalProjects = 10;
+
+	function noFacebook()
+	{
+		$(".LikeButtons, .keep, .like_project, #facebook_likebox, #fb-root, #archer_modal, .addthis_button_facebook, #twtr-widget-1, .txt_twitter").remove();
+		$.colorbox({width:"621px", height:"255px", inline:true, href:"#blocked_modal"});	
+	}
+
+	$(document).ready(function() {
+	
+		window.setTimeout(function()
+			{	
+				if(!hasFacebook)
+					noFacebook();
+			}, 4000 );
+
+	if($.cookie("archercares_voted") == "true")
+	{
+		HideLikeButtons();
+	}
+	
+	$('.funded').fadeTo('fast', 0.4);
+	$('div.funded div.like_project').css('display' , 'none');
+	
+	Cufon.set('selector', jQuery); 
+ 	Cufon.replace('.archer', { fontFamily: 'Archer_Bold' });
+	//Archer Bold is the regular font. Archer Bold Italic needs to be called as such.	
+	Cufon.replace('.archer_semi', { fontFamily: 'Archer_Semi' });	
+		
+	$('.addthis_button_facebook').click(function (){
+		var facebook_share_id = $(this).attr('id');
+		_gaq.push(['_trackEvent', 'Archer Cares 2010', 'Facebook Share', facebook_share_id]);
+	});
+	
+	
+	$('.addthis_button_twitter').click(function (){
+		var twitter_share_id = $(this).attr('id');
+		_gaq.push(['_trackEvent', 'Archer Cares 2010', 'Twitter Share', twitter_share_id]);
+	});
+
+	//setupBar('#progbar1', '452432');
+	setupBar('#progbar2', '451804');
+	setupBar('#progbar3', '443040');
+	//setupBar('#progbar4', '411317');
+	//setupBar('#progbar5', '422922');
+	//setupBar('#progbar6', '413263');
+	//setupBar('#progbar7', '457307');
+	//setupBar('#progbar8', '401139');
+	//setupBar('#progbar9', '443671');
+	//setupBar('#progbar10', '463084');
+	
+  });
+
+</script>
+<script type="text/javascript">
+var addthis_share = {
+	templates : { twitter : "I Helped Turn Likes Into Learning with #ARCHERCARES {{lurl}}"}
+}
+</script>
+
+<!--[if IE 6]>
+<script src="js/DD_belatedPNG.js"></script>
+<script>
+	DD_belatedPNG.fix('.png');
+</script>
+<![endif]-->
+
+<style type="text/css" media="screen, print">
+	@import url("css/styles.css");
+	@import url("css/reset.css");
+</style>
+
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" media="screen" href="css/ie6_fix.css" />
+<![endif]-->
+
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="screen" href="css/ie7_fix.css" />
+<![endif]-->
+
+</head>
+<body>
+<div id="fb-root"></div>
+<script type="text/javascript">
+	var hasFacebook = false;
+	window.fbAsyncInit = function() {
+		hasFacebook = true;
+		FB.init(
+			{
+					status: true, 
+					cookie: true, 
+					xfbml: true
+			}
+		);
+		FB.Event.subscribe('edge.create', function(href,widget) {
+			_gaq.push(['_trackEvent', 'Archer Cares 2010', 'Like', href]);	
+			if(href != 'http://www.facebook.com/archergroup')
+			{
+				var date = new Date();
+				var year_from_now = new Date(date.getTime() + (365* 24 * 60 * 60 * 1000));
+				$.cookie("archercares_voted", "true", {expires:year_from_now});
+				HideLikeButtons();
+				$.colorbox({width:"621px", height:"255px", inline:true, href:"#archer_modal"});
+			}
+			
+		});
+	};
+	
+	(function() {
+	var e = document.createElement('script'); e.async = true;
+	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js#xfbml=1';
+	document.getElementById('fb-root').appendChild(e);
+	}());	
+</script>
+
+<div id="wrapper">
+<div id="contentmain_shadow" class="png">
+	<div id="contentmain">	
+	
+			<div id="stitches">
+			<div id="stitch_1"></div>
+			<div id="stitch_2"></div>
+			<div id="stitch_3"></div>
+			</div>
+	
+	<div id="header">
+	<img src="images/red_ribbon.png" id="logo" class="png" width="290" height="152" alt="Archer Cares" />
+	<div id="right_ribbon" class="png"><a href="http://www.archer-group.com" onclick="window.open(this.href);return false;" class="png">Visit the Archer Group</a></div>
+	<div id="tagline">
+	<span class="archer_semi">Turning</span>
+	<span class="archer tag_likes">Likes</span>
+	<span class="archer_semi">Into Learning</span>
+
+	</div>
+	</div><!--end header-->
+	
+	<div id="share">
+	<div class="share_site">
+	<p class="archer">SHARE this site</p>
+	<a href="http://www.addthis.com/bookmark.php" id="archer_cares_facebook"
+      class="png addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/index.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=Archer+Cares">
+<img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="archer_cares_twitter"
+      class="png addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares">
+<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> 	
+	
+	<div id="how_it_works">
+	<h2 class="archer">How It Works</h2>
+	<div id="step_1" class="png"><div class="archer">"Like"<br />a class project</div></div>
+	<div id="step_2" class="png"><div class="archer">Share with your social network</div></div>
+	<div id="step_3" class="png"><div class="archer">Archer donates<br />for each "Like"</div></div>
+	<div id="step_4" class="png"><div class="archer">Kids Learn</div></div>
+	</div><!--end how it works-->
+	
+	<div id="total_progress" class="png">
+	<span class="archer">TOTAL PROGRESS</span>
+	<div id="totalbar"></div><div id="totalpct"></div>
+	</div>
+	
+	<div id="our_mission">
+		<div id="mission_wrapper">
+		<div id="mission_content">
+		
+	<h3 class="archer mission">OUR MISSION</h3>
+	
+	<p>As <a href="http://www.archer-group.com" title="The Archer Group">Archer</a> turns seven, many of us are realizing the importance of quality education first hand with our own children. We wanted to find a way to make a difference. With your help, Archer is working with <a href="http://www.donorschoose.org/" title="Donors Choose" onclick="window.open(this.href);return false;">DonorsChoose.org</a> to help teachers implement important classroom projects.</p>
+<p>Archer has selected visual arts projects around the country. Ten teachers have proposed projects and outlined their needs. Find the project that speaks to you, press the 'Like' button and Archer will donate to that project. Share with your network and get them to "Like" as well.</p>
+	<div id="facebook_likebox">
+		<h3 class="archer keep">KEEP UP-TO-DATE</h3>
+	<!--	<fb:like-box href="http://www.facebook.com/archergroup" width="193" connections="6" stream="false" header="false"></fb:like-box>-->
+		<iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Farchergroup&amp;width=193&amp;colorscheme=light&amp;connections=6&amp;stream=false&amp;header=false&amp;height=255" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:193px; height:255px;" allowTransparency="true"></iframe>
+	</div>
+	
+	<h3 class="archer bottom txt_twitter">WHO'S TALKING</h3>
+	<h4 class="archer txt_twitter">ABOUT #ARCHERCARES<img src="images/twitter_bird.png" width="37" height="26" alt="Twitter Bird" class="png" /></h4>
+	<div id="twtr-search-widget"></div>
+<script type="text/javascript" src="js/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: '#archercares',
+  interval: 6000,
+  title: '',
+  subject: '',
+  width: 193,
+  height: 330,
+  theme: {
+    shell: {
+      background: 'transparent',
+      color: '#44636a'
+    },
+    tweets: {
+      background: 'transparent',
+      color: '#44636a',
+      links: '#d44c49'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: true,
+    toptweets: true,
+    behavior: 'all'
+  }
+}).render().start();
+</script>
+		</div>
+		</div>
+		
+		<div id="mission_footer" class="png"></div>
+	</div>
+
+<!--<img src="images/fully_funded.png" width="387" height="47" alt="This project has been fully funded" class="fully_funded png" />-->
+<!--START PROJECT-->
+<div class="project">
+
+<div class="project_left">
+
+	<img src="images/project_2.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_2.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="tiny_bits_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/tiny_bits.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=tiny+bits">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="tiny_bits_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_2"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="tiny_bits"></a>
+<h2 class="archer">Tiny Bits of Technology Can Produce Big Results!</h2>
+
+<h3>My Project:</h3>
+<p>In these few short months, my students have become accustomed to a website called Brain Pop. Brain Pop allows them an interactive opportunity to explore the same concepts&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=451804" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>One netbook computer to connect to our projector to provide alternate instruction that will appeal to special needs and visual learners in the classroom. </p>
+
+	<p><div id="progbar2"></div><div id="progbar2togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/tiny_bits.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+<!--START PROJECT-->
+<div class="project">
+
+<div class="project_left">
+
+	<img src="images/project_3.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_3.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="emerging_film_makers_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/emerging_film_makers.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=emerging+film+makers">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="emerging_film_makers_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_3"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="emerging_film_makers"></a>
+<h2 class="archer">Emerging Film Makers</h2>
+
+<h3>My Project:</h3>
+<p>In an age of technology, my students will ease into using the flip camera to record projects, skits and presentations about important issues they face. I want them to be able&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=443040" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>A flip video camera to film projects, skits and activities going on in our classroom and an easel for oral presentations they will create.</p>
+
+	<p><div id="progbar3"></div><div id="progbar3togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/emerging_film_makers.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=452432" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+
+<div class="project_left">
+
+	<img src="images/project_1.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_1.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="spanish_student_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/spanish_student.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=spanish+student">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="spanish_student_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_1"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="spanish_student"></a>
+<h2 class="archer">Spanish Student Film-makers!</h2>
+
+<h3>My Project:</h3>
+<p>With the digital cameras my students will be able to get to know the community they live in better. Many of my students do not go outside of their neighborhoods. There are&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=452432" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>2 digital cameras in order to create a a documentary on the importance of learning a second language</p>
+
+	<p><div id="progbar1"></div><div id="progbar1togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/spanish_student.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like>
+		</div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+
+
+
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=411317" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_4.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_4.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="technology_for_debaters_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/technology_for_debaters.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=technology+for+debaters">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="technology_for_debaters_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_4"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="technology_for_debaters"></a>
+<h2 class="archer">Technology For Debaters</h2>
+
+<h3>My Project:</h3>
+<p>The netbook will help my students to research topics, type documents, and create schedules for their debate tournaments. During practices students will be able to look up information&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=411317" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>A netbook computer and case to do research for debate tournaments.</p>
+
+	<p><div id="progbar4"></div><div id="progbar4togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/technology_for_debaters.htm" layout="button_count" font="trebuchet ms"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=422922" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_5.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_5.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="race_to_top_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/race_to_top.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=race+to+top">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="race_to_top_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_5"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="race_to_top"></a>
+<h2 class="archer">Race to the Top with Technology</h2>
+
+<h3>My Project:</h3>
+<p>With technology influencing the ways in which people interact, solve problems, and explore the world around them, it would be an amazing opportunity for my students to be able&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=422922" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>A laptop computer to start the new school year</p>
+
+	<p><div id="progbar5"></div><div id="progbar5togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/race_to_top.htm" layout="button_count" font="trebuchet ms"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=413263" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_6.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_6.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="caught_you_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/caught_you.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=caught+you">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="caught_you_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_6"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="caught_you"></a>
+<h2 class="archer">CAUGHT YOU Being Good!!</h2>
+
+<h3>My Project:</h3>
+<p>Our students LOVE to see themselves on "the big screen." I love to take pictures of them, then show then a slide show on the TV. With this digital camcorder, I would like&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=413263" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>A digital camcorder and battery</p>
+
+	<p><div id="progbar6"></div><div id="progbar6togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/caught_you.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+
+
+
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=457307" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_7.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_7.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="color_printer_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/color_printer.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=color+printer">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="color_printer_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_7"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="color_printer"></a>
+<h2 class="archer">Color Printer to Brighten Up Our Day!</h2>
+
+<h3>My Project:</h3>
+<p>My students have limited resources at home and I would like my students to be able to open the technology door here in the classroom! We are constantly using the limited technology&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=457307" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>Classroom laserjet printer to make final drafts for writing assignments, assessments, and materials readily available at our fingertips</p>
+
+	<p><div id="progbar7"></div><div id="progbar7togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/color_printer.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=401139" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/expired.png" width="600" height="300" alt="Sorry, this project has expired." class="expired png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_8.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_8.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="adventures_with_froggy_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/adventures_with_froggy.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=adventures+with+froggy">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="adventures_with_froggy_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_8"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="adventures_with_froggy"></a>
+<h2 class="archer">Adventures With Froggy - A Digital Story!</h2>
+
+<h3>My Project:</h3>
+<p>My students will take pictures of themselves having fun with "Froggy", a stuffed animal. Not only will they take pictures, but they will also share their adventures on their blogs&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=401139" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>Digital cameras and accessories in order to create a digital story presentation involving the good times they have with Froggy during the school year!</p>
+
+	<p><div id="progbar8"></div><div id="progbar8togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/adventures_with_froggy.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=443671" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_9.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_9.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="capturing_memories_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/capturing_memories.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=capturing+memories">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="capturing_memories_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_9"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="capturing_memories"></a>
+<h2 class="archer">Capturing Memories</h2>
+
+<h3>My Project:</h3>
+<p>The resource I've chosen to ask for will provide opportunities for my children to work cooperatively to practice the skills and strategies included in our curriculum, and also to involve parents&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=443671" onclick="window.open(this.href);return false;" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>One Flip video camcorder</p>
+
+	<p><div id="progbar9"></div><div id="progbar9togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/capturing_memories.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+
+<a href="http://www.donorschoose.org/donors/proposal.html?id=463084" onclick="window.open(this.href);return false;" style="outline: none;"><img src="images/fully_funded.png" width="600" height="300" alt="This project has been fully funded" class="fully_funded png" /></a>
+<!--START PROJECT-->
+<div class="project funded">
+
+<div class="project_left">
+
+	<img src="images/project_10.png" width="37" height="45" alt="Project" class="project_number png" />
+	<img src="images/project_image_10.jpg" width="190" height="210" alt="Donors Choose Project" class="project_image" />
+	<div class="sharing">
+	<div class="share_project">
+	<p class="archer">SHARE this project</p>
+	<a href="http://www.addthis.com/bookmark.php" id="help_our_graphic_facebook"
+      class="addthis_button_facebook"
+      addthis:url="http://www.archer-group.com/cares/help_our_graphic.htm?utm_campaign=Archer+Cares+2010&utm_source=Facebook&utm_medium=Social&utm_content=help+our+graphic">
+	  <img src="images/share_facebook.png" width="17" height="18" alt="Share this on Facebook" class="png" /></a>
+	<a href="http://www.addthis.com/bookmark.php" id="help_our_graphic_twitter"
+      class="addthis_button_twitter"
+      addthis:url="http://bit.ly/archer_cares_10"
+      addthis:title="I Helped Turn Likes Into Learning with #ARCHERCARES">
+	<img src="images/share_twitter.png" width="18" height="18" alt="Share this on Twitter" class="png" /></a>
+	</div>
+	</div> </div>
+
+<div class="project_right">
+<a name="help_our_graphic"></a>
+<h2 class="archer">Help Our Graphic Arts Program Grow!</h2>
+
+<h3>My Project:</h3>
+<p>Having digital cameras in the Graphic Arts classroom will enable me to teach students how to apply many of the functions of Photoshop to their own digital images&hellip; <a href="http://www.donorschoose.org/donors/proposal.html?id=463084" onclick="window.open(this.href);return false;">Read more on DonorsChoose.org</a></p>
+<h3>My Students Need:</h3>
+<p>2 digital cameras to enhance the newly formed Graphic Arts Program at our school</p>
+
+	<p><div id="progbar10"></div><div id="progbar10togo"></div></p>
+
+	<div class="like_project png">
+	<span class="proj_likes archer">LIKE</span>
+	<span class="proj archer">this project</span>
+	<div class="LikeButtons">
+		<fb:like href="http://www.archer-group.com/cares/help_our_graphic.htm" layout="button_count" font="trebuchet ms" class="fb_like_testing"></fb:like></div>
+	</div>
+
+</div><!--end project right-->
+</div><!--END PROJECT-->
+
+	<div style="display: none;">
+		<div id="archer_modal" class="png">
+		<div id="thank_you">
+		<p class="archer">Thank you for liking one of our projects</p>
+		</div>
+		
+		<div id="please_fan"><p class="archer_semi">To keep up to date on the status of your<br />project, please fan The Archer Group</p></div>
+		<img src="images/modal_arrow.gif" width="15" height="38" alt="Fan Us on Facebook" />
+	<a href="http://www.facebook.com/archergroup" title="Fan Us on Facebook" onclick="window.open(this.href);return false;">
+	<img src="images/facebook_modal.gif" class="facebook" width="42" height="41" alt="Fan Us on Facebook" /></a>
+	<a href="http://www.facebook.com/archergroup" class="archer" title="Fan Us on Facebook" onclick="window.open(this.href);return false;">Fan us on<br />Facebook</a>
+		</div>
+	</div>
+	
+	<div style="display: none;">
+		<div id="blocked_modal" class="png">
+		<div id="company_blocks">
+		<p class="archer">Oops, your company blocks Facebook</p>
+		</div>
+		
+		<div id="get_involved">
+		<p class="archer_semi">Looks like you'll have to get involved from your home computer, iPhone or Android phone.</p>
+		</div>
+		</div>
+	</div>
+
+<div id="buffer"></div>		
+<div id="footer">
+		<div id="copyright">&copy; <?= date('Y'); ?> The Archer Group</div><!--end copyright-->
+		<div id="footer_links">
+			<ul>
+				<li class="first"><a href="http://www.archer-group.com/" title="Home">Home</a></li>
+				<li><a href="http://www.archer-group.com/great-people/about" title="Great People">Great People</a></li>
+				<li><a href="http://www.archer-group.com/great-work/services" title="Great Work">Great Work</a></li>
+				<li><a href="http://www.archer-group.com/great-brands/client-list" title="Great Brands">Great Brands</a></li>
+				<li class="last"><a href="http://www.archer-group.com/site-map" title="Site Map">Site Map</a></li>
+			</ul>
+		</div><!--end footer_links-->
+		<div id="keepintouch">
+			<span>Keep In Touch:</span>
+			<a href="http://www.facebook.com/pages/Wilmington-DE/The-Archer-Group/12977425860" title="Facebook" onclick="window.open(this.href);return false;"><img src="images/footer_facebook.gif" width="29" height="28" alt="Facebook" /></a>
+			<a href="http://www.archer-group.com/feed/atom" title="RSS Feed" onclick="window.open(this.href);return false;"><img src="images/footer_rss.gif" width="29" height="28" alt="RSS Feed" /></a>
+			<a href="http://twitter.com/thearchergroup" title="The Archer Group - Twitter" onclick="window.open(this.href);return false;"><img src="images/footer_twitter.gif" width="29" height="28" alt="Twitter" /></a>
+			</div><!--end Keep in Touch-->
+			<div id="left_ribbon" class="png"></div>
+			<div id="right_ribbon_bottom" class="png"></div>
+</div><!--end footer-->
+</div><!--end content main-->
+</div><!--end content shadow-->
+</div><!--end wrapper-->
+<script language="javascript">
+
+	// uncomment to un-cookie
+	//$.cookie("archercares_voted", "false");
+	
+	var currentPercent=projectsCompleted * 100;
+	var totalPercent=totalProjects * 100;	
+
+	$('#totalbar').progressbar({ value: 0 });	
+
+	function setupBar(elemname, projectId)
+	{
+		var jsonurl = "getproj.php";
+		var data = new Object();
+		data.projid= projectId;
+		
+	
+		$.ajax({
+		  type: 'POST',
+		  url: jsonurl,
+		  dataType: 'json',
+		  data: data,
+		  success: function(res)
+		  {
+			//console.log(res);
+			if(res.proposals[0])
+			{
+				$(elemname).progressbar( { value: parseInt(res.proposals[0].percentFunded) } );
+				$( elemname + "togo" ).html( "$" + Math.floor(parseInt(res.proposals[0].costToComplete)) + " to go");
+				currentPercent += parseInt(res.proposals[0].percentFunded);
+				
+				var pct = Math.floor( (100*currentPercent/totalPercent) );
+				$( "#totalbar" ).progressbar( "option", "value", pct );
+				$( "#totalpct" ).html( pct + "% completed");
+			}
+			else
+			{
+				$(elemname).progressbar( { value: 0 } );
+				$( elemname + "togo" ).html( "$ to go");
+				$( "#totalbar" ).progressbar( "option", "value", 0 );
+				$( "#totalpct" ).html( 0 + "% completed");
+			}
+		  },
+		  error:function(res)
+		  {
+			console.log(res);
+		  }
+		});	
+		
+	}
+	
+	function HideLikeButtons(){
+		$('.like_project').fadeOut('slow', function() {});
+  	}
+
+</script>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>

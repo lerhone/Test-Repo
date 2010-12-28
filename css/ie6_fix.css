@@ -1,0 +1,50 @@
+#contentmain {
+	margin-left: 2.5px;
+}
+
+#our_mission {z-index: 10;}
+
+
+.project {
+	margin-left: 20px;
+}
+
+#total_progress .ui-progressbar {
+	margin: 6px 0 0 12px;
+}
+
+
+.proj_likes {
+	top: 6px;
+	left: 25px;
+}
+.proj {
+	top: 10px;
+	left: 77px;
+}
+
+.like_project div.LikeButtons {
+	top: 10px;
+	left: 170px;
+}
+
+#right_ribbon a {
+	display:block;
+	text-indent: -1000em;
+	position: absolute;
+	top: 0;
+	right: -290px;
+	width: 290px;
+	height: 91px;
+	background: transparent url(../images/right_ribbon.gif) no-repeat top left;
+	outline: none;
+}
+
+#right_ribbon a:hover {background-position: bottom; width: 290px;	height: 91px;}
+
+#archer_modal, #blocked_modal {
+	position: relative;
+	width: 621px;
+	height: 190px;
+	background: transparent url(../images/archer_modal.gif) no-repeat top left;
+}

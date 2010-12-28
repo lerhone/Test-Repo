@@ -1,0 +1,41 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF url(../images/bg_tile.gif) repeat top left;
+	font: 12px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #44636a;
+	text-align: center;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+a {color: #d44c49;}
+
+img {
+	position: relative; 
+	/*width: 240px;*/
+	width: 145px;
+	border: none; 
+	padding: 0; 
+	margin: 0 auto; 
+}
+
+#contentmain {
+	padding: 0;
+	width: 70%;
+	margin: 0 auto;
+	/*background-color: #f5f4f3;*/
+	background-color: #ffffff;
+	padding: 0 20px 20px 20px;
+}
+
+.cares {padding-bottom: 10px;}
+
+.learning {
+	border-bottom: 12px solid #E8E2D5; 
+	margin-bottom: 15px;
+}
+
